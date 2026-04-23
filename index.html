@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeMaster Pro - Muscle Memory Builder 🧠</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 25px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.2);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 32px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo-badge {
+            background: #ff6b6b;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .day-counter {
+            text-align: right;
+            color: white;
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            width: 150px;
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .day-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .day-input {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: none;
+            width: 80px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .go-btn {
+            background: #667eea;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Welcome Banner */
+        .welcome-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 25px 30px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .welcome-text h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .motivation-quote {
+            font-style: italic;
+            margin-top: 10px;
+            font-size: 14px;
+            border-left: 3px solid #ffd700;
+            padding-left: 15px;
+        }
+
+        .streak-box {
+            text-align: center;
+            background: rgba(255,255,255,0.2);
+            padding: 15px 25px;
+            border-radius: 15px;
+        }
+
+        .streak-number {
+            font-size: 48px;
+            font-weight: 800;
+        }
+
+        .streak-label {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* Main Grid Layout */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 900px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+        }
+
+        .card-icon {
+            font-size: 24px;
+        }
+
+        .card-header h2 {
+            font-size: 20px;
+            color: #333;
+        }
+
+        /* Mission Card */
+        .mission-card {
+            background: linear-gradient(135deg, #fff 0%, #f8f9ff 100%);
+            border-left: 5px solid #667eea;
+        }
+
+        .topic-name {
+            font-size: 28px;
+            font-weight: 800;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .topic-detail, .topic-practice, .topic-time {
+            padding: 8px 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* Flash Card for Memory */
+        .flash-card {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .flash-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .flash-question {
+            font-size: 18px;
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 15px;
+        }
+
+        .flash-answer {
+            font-size: 14px;
+            color: #78350f;
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            font-family: monospace;
+            display: none;
+        }
+
+        .flash-card.show .flash-answer {
+            display: block;
+        }
+
+        .flash-hint {
+            font-size: 12px;
+            color: #b45309;
+            margin-top: 10px;
+        }
+
+        /* Typing Practice */
+        .typing-practice {
+            background: #1e1e2e;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .typing-target {
+            color: #c9d1d9;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            background: #0d1117;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .typing-input {
+            width: 100%;
+            background: #0d1117;
+            color: #c9d1d9;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        .typing-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            color: #8b949e;
+            font-size: 12px;
+        }
+
+        /* Practice Questions */
+        .practice-questions {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .question-item {
+            background: #f9f9ff;
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid #eef2ff;
+        }
+
+        .question-text {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .q-number {
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        .btn-reveal {
+            background: #4a5568;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .answer-box {
+            background: #e8f5e9;
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 10px;
+            border-left: 3px solid #4caf50;
+            display: none;
+        }
+
+        .answer-box code {
+            display: block;
+            margin-top: 8px;
+            background: #1e1e2e;
+            color: #c9d1d9;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: monospace;
+        }
+
+        .code-input {
+            width: 100%;
+            background: #1e1e2e;
+            color: #c9d1d9;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            resize: vertical;
+            margin: 10px 0;
+        }
+
+        .btn-check {
+            background: #48bb78;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .feedback.success { color: #48bb78; }
+        .feedback.error { color: #f56565; }
+
+        /* Challenge Card */
+        .challenge-card {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        .challenge-task {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
+            font-weight: 500;
+        }
+
+        .btn-challenge {
+            background: #e53e3e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        /* Tips */
+        .tip-text {
+            font-size: 16px;
+            line-height: 1.6;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .daily-affirmation {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            padding: 15px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+
+        /* Progress Stats */
+        .progress-stats {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+
+        /* Navigation */
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 12px 25px;
+            background: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .prev, .next {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .reset {
+            background: #4a5568;
+            color: white;
+        }
+
+        /* Memory Meter */
+        .memory-meter {
+            background: #e0e7ff;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .memory-meter h4 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #3730a3;
+        }
+
+        .meter-bar {
+            height: 8px;
+            background: #c7d2fe;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .meter-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #6366f1, #a855f7);
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255,255,255,0.6);
+            font-size: 12px;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            animation: fall 3s linear forwards;
+            z-index: 9999;
+        }
+        
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+        
+        .toast-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #48bb78;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            display: none;
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .badge {
+            display: inline-block;
+            background: #fbbf24;
+            color: #92400e;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+
+        .revision-code {
+            background: #1e1e2e;
+            color: #c9d1d9;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .revision-code code {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+        }
+
+        .btn-small {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">CodeMaster Pro</span>
+                <span class="logo-badge">Memory Builder</span>
+            </div>
+            <div class="day-counter">
+                Day <span id="dayNumber">1</span> of 60
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 1.67%"></div>
+                </div>
+                <div class="day-selector">
+                    <input type="number" id="dayInput" min="1" max="60" value="1" class="day-input">
+                    <button onclick="goToDay()" class="go-btn">Go →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+            <div class="welcome-text">
+                <h1>नमस्ते, Abhinav! 🙏</h1>
+                <p>Main hoon <strong>Sun Tu</strong>, tera personal backend mentor. 10+ saal ka experience!</p>
+                <p class="motivation-quote">"Code likhna bhoolta hai? Roz likh, muscle memory bana. Galti kar, phir sahi kar."</p>
+            </div>
+            <div class="streak-box">
+                <div class="streak-number" id="streakNumber">0</div>
+                <div class="streak-label">Total Solved 🔥</div>
+            </div>
+        </div>
+
+        <!-- Progress Stats -->
+        <div class="progress-stats">
+            <div class="stat"><div class="stat-value" id="daysCompleted">1</div><div class="stat-label">Days Done</div></div>
+            <div class="stat"><div class="stat-value" id="masteryScore">0</div><div class="stat-label">Mastery %</div></div>
+            <div class="stat"><div class="stat-value" id="repeatCount">0</div><div class="stat-label">Repeats Done</div></div>
+            <div class="stat"><div class="stat-value" id="hoursSpent">0</div><div class="stat-label">Hours Tracked</div></div>
+            <div class="stat"><div class="stat-value" id="journeyPercent">1.7%</div><div class="stat-label">Journey</div></div>
+        </div>
+
+        <!-- Main Grid: Left Side (Mission + Flash Card + Typing) & Right Side (Questions) -->
+        <div class="main-grid">
+            <!-- Left Column -->
+            <div>
+                <!-- Today's Mission -->
+                <div class="card mission-card">
+                    <div class="card-header">
+                        <span class="card-icon">🎯</span>
+                        <h2>Today's Mission</h2>
+                    </div>
+                    <div class="mission-content" id="missionContent"></div>
+                </div>
+
+                <!-- 🔥 Flash Card for Memory (Most Important) -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🃏</span>
+                        <h2>Memory Flash Card <span class="badge">Click to Reveal</span></h2>
+                    </div>
+                    <div class="flash-card" id="flashCard" onclick="toggleFlashCard()">
+                        <div class="flash-question" id="flashQuestion">Click to see concept...</div>
+                        <div class="flash-answer" id="flashAnswer"></div>
+                        <div class="flash-hint">💡 अपने दिमाग में पहले answer सोचो, फिर click करो!</div>
+                    </div>
+                    <div class="memory-meter">
+                        <h4>📊 Concept Memory Strength</h4>
+                        <div class="meter-bar"><div class="meter-fill" id="memoryMeter" style="width: 0%"></div></div>
+                        <p style="font-size:12px; margin-top:8px;" id="memoryTip">New concept! Practice more to strengthen memory.</p>
+                    </div>
+                </div>
+
+                <!-- ⌨️ Typing Practice (Muscle Memory) -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">⌨️</span>
+                        <h2>Typing Practice <span class="badge">Muscle Memory</span></h2>
+                    </div>
+                    <div class="typing-practice">
+                        <div class="typing-target" id="typingTarget">$name = "Abhinav"; echo $name;</div>
+                        <textarea class="typing-input" id="typingInput" rows="3" placeholder="Type the code above exactly..."></textarea>
+                        <div class="typing-stats">
+                            <span>✅ <span id="typingAccuracy">0</span>% accuracy</span>
+                            <span>🔄 <span id="typingAttempts">0</span> attempts</span>
+                            <button class="btn-small" onclick="resetTyping()">Reset</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Revision -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🔄</span>
+                        <h2>Revision (Yesterday's Topic)</h2>
+                    </div>
+                    <div class="revision-content" id="revisionContent"></div>
+                </div>
+            </div>
+
+            <!-- Right Column - Practice Questions -->
+            <div>
+                <div class="card practice-card">
+                    <div class="card-header">
+                        <span class="card-icon">✍️</span>
+                        <h2>Daily Practice (Solve Without AI!)</h2>
+                    </div>
+                    <div class="practice-questions" id="practiceQuestions"></div>
+                </div>
+
+                <!-- Challenge -->
+                <div class="card challenge-card">
+                    <div class="card-header">
+                        <span class="card-icon">🏆</span>
+                        <h2>Today's Challenge</h2>
+                    </div>
+                    <div class="challenge-content">
+                        <div class="challenge-task" id="challengeTask"></div>
+                        <button class="btn-challenge" onclick="markChallengeComplete()">✅ Mark as Complete</button>
+                    </div>
+                </div>
+
+                <!-- Teacher's Tip -->
+                <div class="card motivation-card">
+                    <div class="card-header">
+                        <span class="card-icon">💪</span>
+                        <h2>Teacher's Tip</h2>
+                    </div>
+                    <div class="tip-text" id="tipText"></div>
+                    <div class="daily-affirmation">"Tu kar sakta hai! Har din thoda improve ho raha hai. 🔥"</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button onclick="previousDay()" class="nav-btn prev">← Previous Day</button>
+            <button onclick="goToDay1()" class="nav-btn reset">🏠 Day 1</button>
+            <button onclick="nextDay()" class="nav-btn next">Next Day →</button>
+        </div>
+
+        <div class="footer">
+            <p>Made with ❤️ for Abhinav | Mentor: Sun Tu (10+ Years Exp)</p>
+            <p class="footer-motto">"Code daily. Learn daily. Grow daily."</p>
+        </div>
+    </div>
+
+    <script>
+        // ============ COMPLETE 60 DAYS DATA ============
+        const dailyTopics = {
+            1: ["PHP Basics", "Variables, Constants, Data Types", "var_dump(), print_r()", "15 min", "Variables store data. Constants are fixed values. Use `$` for variables, `const` or `define()` for constants."],
+            2: ["Operators", "Arithmetic, Assignment, Comparison", "Practice all operators", "20 min", "Operators perform operations: + - * / % = == === != < >"],
+            3: ["Conditions", "if-else, elseif, switch", "Write 5 different conditions", "20 min", "if, elseif, else, switch - control program flow based on conditions"],
+            4: ["Loops", "for, while, do-while, foreach", "Print 1-100 using each loop", "25 min", "Loops repeat code: for(init;cond;inc), while(cond), do{}while(), foreach(array)"],
+            5: ["Arrays Pt.1", "Indexed arrays, array functions", "count(), push(), pop()", "25 min", "Indexed arrays use numeric keys. count() for length, array_push() add, array_pop() remove"],
+            6: ["Arrays Pt.2", "Associative arrays", "Loop through key-value pairs", "25 min", "Associative arrays use named keys. foreach($arr as $key=>$value)"],
+            7: ["Arrays Pt.3", "Multidimensional arrays", "Nested loops practice", "30 min", "Arrays inside arrays. Access with $arr[0]['key']"],
+            8: ["Array Functions", "array_map, array_filter, array_reduce", "10 array problems", "30 min", "Functional programming with arrays"],
+            9: ["String Functions", "strlen, substr, strpos, explode, implode", "15 string problems", "25 min", "String manipulation functions"],
+            10: ["Functions", "Parameterized, Return, Default values", "Write 10 functions", "30 min", "Reusable code blocks. function name($param=default){ return value; }"],
+            11: ["Variable & Callback Functions", "Anonymous functions, callbacks", "Practice callbacks", "30 min", "Functions as variables. $func = function(){}; call_user_func()"],
+            12: ["Superglobals", "$_GET, $_POST, $_REQUEST", "Build a form handler", "30 min", "Built-in arrays: $_GET, $_POST, $_SESSION, $_COOKIE"],
+            13: ["Sessions", "session_start(), $_SESSION", "Login system", "35 min", "Server-side user data. session_start(), $_SESSION['key']=value"],
+            14: ["Cookies", "setcookie(), $_COOKIE", "Remember me feature", "30 min", "Client-side storage. setcookie(name,value,expire)"],
+            15: ["File Upload", "move_uploaded_file(), $_FILES", "Image upload system", "35 min", "Handle file uploads. $_FILES, move_uploaded_file()"],
+            16: ["OOP - Classes & Objects", "class, new, properties, methods", "Create User class", "40 min", "class ClassName { public $prop; function method(){} }"],
+            17: ["OOP - Inheritance", "extends, parent::", "Admin extends User", "40 min", "class Child extends Parent { } parent::method()"],
+            18: ["OOP - Encapsulation", "private, protected, getters/setters", "Bank account class", "40 min", "Hide data. private $prop; public getProp(){}"],
+            19: ["OOP - Polymorphism", "Interfaces, Abstract classes", "Payment interface", "45 min", "interface Payment { method(); } class Card implements Payment"],
+            20: ["OOP - Magic Methods", "__construct, __get, __set, __call", "Practice all", "40 min", "__construct() runs on new. __get/__set for properties"],
+            21: ["Error Handling", "try-catch, throw, finally", "Custom exceptions", "35 min", "try{ }catch(Exception $e){ }finally{ }"],
+            22: ["PDO Basics", "Connect, query, fetch", "CRUD operations", "45 min", "new PDO(); prepare(); execute(); fetch()"],
+            23: ["PDO Advanced", "Prepared statements, transactions", "Safe database operations", "45 min", "bindParam(); beginTransaction(); commit(); rollBack()"],
+            24: ["PHP Project", "Todo List", "Full CRUD with PHP", "90 min", "Complete CRUD application"],
+            25: ["PHP Project", "Student Management", "Complete system", "90 min", "Student CRUD with database"],
+            26: ["Laravel Setup", "Installation, Artisan, Folder structure", "First Laravel project", "40 min", "composer create-project laravel/laravel"],
+            27: ["Laravel Routing", "web.php, Route parameters", "20 routes", "40 min", "Route::get('/url', [Controller::class, 'method'])"],
+            28: ["Laravel Controllers", "Resource controllers", "Full CRUD controller", "45 min", "php artisan make:controller NameController --resource"],
+            29: ["Laravel Blade", "Layouts, Components", "Master layout", "40 min", "@extends, @section, @yield, @component"],
+            30: ["Laravel Migrations", "Schema builder", "5 migrations", "40 min", "php artisan make:migration; Schema::create()"],
+            31: ["Eloquent Basics", "Model, CRUD", "Product CRUD", "45 min", "php artisan make:model; Model::all(), ::find(), ::create()"],
+            32: ["Eloquent Relationships", "hasMany, belongsTo", "User-Post-Comment", "50 min", "$user->posts() { return $this->hasMany(Post::class); }"],
+            33: ["Laravel Validation", "Request classes", "Form validation", "40 min", "$request->validate(['email'=>'required|email'])"],
+            34: ["Laravel Authentication", "Laravel Breeze", "Login/Register", "50 min", "composer require laravel/breeze; php artisan breeze:install"],
+            35: ["Laravel Middleware", "Custom middleware", "Admin middleware", "40 min", "php artisan make:middleware; $request->user()->isAdmin()"],
+            36: ["Laravel File Storage", "Storage facade", "Profile picture", "40 min", "Storage::disk('public')->put('file.jpg', $content)"],
+            37: ["Laravel Query Builder", "Complex queries", "Advanced queries", "45 min", "DB::table('users')->where('active',1)->join()->get()"],
+            38: ["Laravel Project", "Task Manager", "Tasks with categories", "90 min", "Complete Task Manager with auth"],
+            39: ["REST API Basics", "API routes, Resources", "Simple API", "45 min", "Route::apiResource(); API Resources"],
+            40: ["Laravel API", "API with Sanctum", "Authentication API", "50 min", "composer require laravel/sanctum; API tokens"],
+            41: ["API Testing", "Postman", "Test all endpoints", "40 min", "Postman collections; API documentation"],
+            42: ["Third-party APIs", "Guzzle HTTP client", "Fetch external data", "45 min", "composer require guzzlehttp/guzzle; new Client()"],
+            43: ["Laravel Project", "Blog API", "Complete REST API", "90 min", "Blog API with Sanctum auth"],
+            44: ["Laravel Queues", "Jobs, Queue worker", "Email sending", "45 min", "php artisan make:job; dispatch(); php artisan queue:work"],
+            45: ["Laravel Events", "Events & Listeners", "Welcome email", "40 min", "php artisan make:event; php artisan make:listener"],
+            46: ["Laravel Caching", "Cache facade", "Page caching", "40 min", "Cache::put('key','value',$seconds); Cache::get('key')"],
+            47: ["Performance", "N+1 problem", "Optimize queries", "40 min", "with() eager loading; lazy loading"],
+            48: ["Security", "XSS, CSRF, SQL Injection", "Secure coding", "40 min", "CSRF tokens; htmlspecialchars(); Prepared statements"],
+            49: ["E-commerce Project", "Products, Cart", "Shopping cart", "90 min", "Session cart; Products CRUD"],
+            50: ["E-commerce Project", "Orders, Checkout", "Order system", "90 min", "Orders table; Checkout process"],
+            51: ["Job Portal Project", "Jobs, Applications", "Apply for jobs", "90 min", "Job listings; Applications"],
+            52: ["Social Media Project", "Posts, Comments", "Basic social features", "90 min", "Posts; Comments; Likes"],
+            53: ["Testing", "PHPUnit", "Write tests", "45 min", "php artisan make:test; setUp(); assertSee()"],
+            54: ["Deployment", "Shared hosting", "Live project", "60 min", "Deploy to DigitalOcean/Forge"],
+            55: ["Interview Prep", "Common Questions", "Mock interview", "60 min", "PHP OOP Questions; Laravel Questions"],
+            56: ["Revision Week", "All Array Concepts", "30 array problems", "60 min", "Complete array revision"],
+            57: ["Revision Week", "All OOP Concepts", "Build OOP project", "60 min", "Complete OOP revision"],
+            58: ["Revision Week", "All Laravel Concepts", "Build Laravel app", "90 min", "Complete Laravel revision"],
+            59: ["Final Project", "Complete Web App", "Portfolio project", "120 min", "Build portfolio project"],
+            60: ["Success Day", "Review all learning", "Celebrate! 🎉", "60 min", "🎉 Congratulations! You're job ready!"]
+        };
+
+        const practiceQuestions = {
+            1: [
+                {q: 'Create a variable $name = "Abhinav" and print it', a: '$name = "Abhinav"; echo $name;'},
+                {q: 'Define a constant PI with value 3.14', a: 'const PI = 3.14; or define("PI", 3.14);'},
+                {q: 'What is the difference between const and define()?', a: 'const is compile-time, define() is runtime.'}
+            ],
+            5: [
+                {q: '$fruits = ["Apple", "Banana", "Mango"]; Print Banana', a: 'echo $fruits[1];'},
+                {q: 'Add "Orange" to the end of array', a: 'array_push($fruits, "Orange");'},
+                {q: 'Remove last element from array', a: 'array_pop($fruits);'}
+            ],
+            6: [
+                {q: '$user = ["name" => "Abhinav", "age" => 25]; Print name', a: 'echo $user["name"];'},
+                {q: 'Add new key "city" with value "Delhi"', a: '$user["city"] = "Delhi";'},
+                {q: 'Loop through array and print all keys and values', a: 'foreach($user as $key => $value) { echo "$key: $value"; }'}
+            ],
+            7: [
+                {q: '$products = [["name"=>"Laptop","price"=>50000], ["name"=>"Mouse","price"=>500]]; Print Laptop price', a: 'echo $products[0]["price"];'},
+                {q: 'Loop and print all product names', a: 'foreach($products as $product) { echo $product["name"]; }'},
+                {q: 'Calculate total price of all products', a: '$total = array_sum(array_column($products, "price"));'}
+            ],
+            16: [
+                {q: 'Create a class User with name and email properties', a: 'class User { public $name; public $email; }'},
+                {q: 'Add a method greet() that returns "Hello, {name}"', a: 'public function greet() { return "Hello, " . $this->name; }'},
+                {q: 'Create an object and set properties', a: '$user = new User(); $user->name = "Abhinav";'}
+            ]
+        };
+
+        const defaultQuestions = [
+            {q: 'Write a function that takes two numbers and returns their sum', a: 'function sum($a, $b) { return $a + $b; }'},
+            {q: 'Create an array of 5 numbers and print the largest number', a: '$arr = [1,2,3,4,5]; echo max($arr);'},
+            {q: 'Write a loop that prints numbers from 1 to 10', a: 'for($i=1; $i<=10; $i++) { echo $i; }'}
+        ];
+
+        const tips = [
+            "💡 Array confuse hota hai? Paper pe array draw karo, index 0,1,2 likho. Phir code likhna easy lagta hai!",
+            "💡 Code likhne se pehle 5 minute paper pe pseudo code likho. Steps clear honge to code apne aap likh jayega.",
+            "💡 Error aaye to panic mat karo. Error message READ karo, Google karo (AI nahi), 30 min try karo.",
+            "💡 Roz ek hi concept 3 baar likho. Subah, dopahar, raat. Muscle memory banegi.",
+            "💡 Jo code AI se likhwate ho, use dubara manually likho. Yahi se learning hoti hai."
+        ];
+
+        const challenges = [
+            "Build a small function that solves a real-world problem using today's concepts.",
+            "Create an array of 10 items and perform 5 different array operations on it.",
+            "Write a class with 3 properties and 2 methods, then create an object."
+        ];
+
+        const codeSnippets = {
+            1: '// Variables & Constants\n$name = "Abhinav";\nconst PI = 3.14;\ndefine("APP_NAME", "CodeMaster");',
+            2: '// Operators Practice\n$a = 10; $b = 20;\necho $a + $b; // Addition',
+            3: '// Conditions Practice\n$age = 18;\nif($age >= 18) { echo "Adult"; } else { echo "Minor"; }',
+            4: '// Loops Practice\nfor($i = 1; $i <= 10; $i++) { echo $i . " "; }'
+        };
+
+        let currentDay = 1;
+        let typingAttempts = 0;
+        let totalRepeats = 0;
+
+        function getQuestionsForDay(day) {
+            return practiceQuestions[day] || defaultQuestions;
+        }
+
+        function updatePage() {
+            const topic = dailyTopics[currentDay];
+            
+            // Mission
+            document.getElementById('missionContent').innerHTML = `
+                <div class="topic-name">${topic[0]}</div>
+                <div class="topic-detail">📖 ${topic[1]}</div>
+                <div class="topic-practice">💻 ${topic[2]}</div>
+                <div class="topic-time">⏱️ Time Required: ${topic[3]}</div>
+            `;
+
+            // Flash Card
+            document.getElementById('flashQuestion').innerHTML = `📌 ${topic[0]} - Key Concept`;
+            document.getElementById('flashAnswer').innerHTML = topic[4] || `${topic[1]}. Practice with today's exercises.`;
+            
+            // Typing target
+            const typingTargets = [
+                `$${topic[0].toLowerCase().replace(/ /g, '_')} = "Learning PHP";`,
+                `// Today's topic: ${topic[0]}\nfunction learn${topic[0].replace(/ /g, '')}() {\n    echo "Learning ${topic[0]}";\n}`,
+                `<?php\n// Practice ${topic[0]}\n$concept = "${topic[0]}";\necho $concept;\n?>`
+            ];
+            document.getElementById('typingTarget').innerHTML = typingTargets[currentDay % 3];
+            
+            // Revision
+            const prevDay = currentDay > 1 ? currentDay - 1 : 1;
+            const prevTopic = dailyTopics[prevDay];
+            document.getElementById('revisionContent').innerHTML = `
+                <div class="revision-topic">📌 ${prevTopic[0]} - ${prevTopic[1]}</div>
+                <div class="revision-code"><code>${codeSnippets[prevDay] || codeSnippets[1]}</code></div>
+                <button class="btn-small" onclick="copyRevisionCode()">📋 Copy Code</button>
+            `;
+
+            // Practice Questions
+            const questions = getQuestionsForDay(currentDay);
+            let qHtml = '';
+            questions.forEach((q, idx) => {
+                qHtml += `
+                    <div class="question-item">
+                        <div class="question-text"><span class="q-number">${idx+1}.</span> ${q.q}</div>
+                        <button class="btn-reveal" onclick="revealAnswer(this, \`${q.a.replace(/`/g, '\\`')}\`)">🔍 Show Answer</button>
+                        <div class="answer-box"></div>
+                        <textarea class="code-input" id="codeInput-${idx}" rows="3" placeholder="Write your code here..."></textarea>
+                        <button class="btn-check" onclick="checkCode(${idx}, \`${q.a.replace(/`/g, '\\`')}\`)">⚡ Check Code</button>
+                        <div class="feedback" id="feedback-${idx}"></div>
+                    </div>
+                `;
+            });
+            document.getElementById('practiceQuestions').innerHTML = qHtml;
+
+            // Challenge
+            document.getElementById('challengeTask').innerHTML = challenges[Math.floor(Math.random() * challenges.length)];
+            
+            // Tip
+            document.getElementById('tipText').innerHTML = tips[Math.floor(Math.random() * tips.length)];
+
+            // Stats
+            document.getElementById('dayNumber').innerHTML = currentDay;
+            document.getElementById('daysCompleted').innerHTML = currentDay;
+            const percent = ((currentDay / 60) * 100).toFixed(1);
+            document.getElementById('journeyPercent').innerHTML = percent + '%';
+            document.getElementById('progressFill').style.width = percent + '%';
+            
+            updateMemoryMeter();
+            updateStreak();
+            
+            localStorage.setItem('currentDay', currentDay);
+        }
+
+        function toggleFlashCard() {
+            const flash = document.getElementById('flashCard');
+            flash.classList.toggle('show');
+            if (flash.classList.contains('show')) {
+                const currentStrength = parseInt(localStorage.getItem(`memory_${currentDay}`) || '0');
+                const newStrength = Math.min(100, currentStrength + 10);
+                localStorage.setItem(`memory_${currentDay}`, newStrength);
+                updateMemoryMeter();
+                showToast('🧠 Memory strengthened! +10%', 'success');
+            }
+        }
+
+        function updateMemoryMeter() {
+            const strength = parseInt(localStorage.getItem(`memory_${currentDay}`) || '0');
+            document.getElementById('memoryMeter').style.width = strength + '%';
+            if (strength < 30) document.getElementById('memoryTip').innerHTML = '🟡 New concept! Review multiple times.';
+            else if (strength < 70) document.getElementById('memoryTip').innerHTML = '🟢 Getting better! Keep practicing.';
+            else document.getElementById('memoryTip').innerHTML = '🔵 Strong memory! Almost mastered.';
+        }
+
+        function checkTyping() {
+            const target = document.getElementById('typingTarget').innerText;
+            const userInput = document.getElementById('typingInput').value;
+            typingAttempts++;
+            
+            let correct = 0;
+            for(let i = 0; i < Math.min(target.length, userInput.length); i++) {
+                if(target[i] === userInput[i]) correct++;
+            }
+            const accuracy = target.length > 0 ? Math.round((correct / target.length) * 100) : 0;
+            
+            document.getElementById('typingAccuracy').innerHTML = accuracy;
+            document.getElementById('typingAttempts').innerHTML = typingAttempts;
+            
+            if(accuracy === 100) {
+                showToast('🎯 Perfect typing! Muscle memory building! +5 XP', 'success');
+                totalRepeats++;
+                document.getElementById('repeatCount').innerHTML = totalRepeats;
+                localStorage.setItem('totalRepeats', totalRepeats);
+            }
+        }
+
+        function resetTyping() {
+            document.getElementById('typingInput').value = '';
+            typingAttempts = 0;
+            document.getElementById('typingAccuracy').innerHTML = '0';
+            document.getElementById('typingAttempts').innerHTML = '0';
+        }
+
+        function revealAnswer(btn, answer) {
+            const answerBox = btn.nextElementSibling;
+            answerBox.innerHTML = `<strong>✅ Answer:</strong><code>${answer}</code>`;
+            answerBox.style.display = 'block';
+        }
+
+        function checkCode(questionIndex, correctAnswer) {
+            const codeInput = document.getElementById(`codeInput-${questionIndex}`);
+            const userCode = codeInput.value.trim();
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            
+            if (!userCode) {
+                feedbackDiv.innerHTML = '⚠️ Please write your code first!';
+                feedbackDiv.className = 'feedback error';
+                return;
+            }
+            
+            const normalizedUser = userCode.replace(/\s+/g, ' ').trim();
+            const normalizedAnswer = correctAnswer.replace(/\s+/g, ' ').trim();
+            
+            if (normalizedUser === normalizedAnswer || normalizedUser.includes(normalizedAnswer.substring(0, 20))) {
+                feedbackDiv.innerHTML = '🎉 Excellent! Your code is correct! Keep it up!';
+                feedbackDiv.className = 'feedback success';
+                saveProgress(questionIndex);
+            } else {
+                feedbackDiv.innerHTML = '🤔 Almost there! Check the answer and try again.';
+                feedbackDiv.className = 'feedback error';
+            }
+        }
+
+        function saveProgress(questionId) {
+            let completed = JSON.parse(localStorage.getItem('completedQuestions') || '[]');
+            const key = `day_${currentDay}_q_${questionId}`;
+            if (!completed.includes(key)) {
+                completed.push(key);
+                localStorage.setItem('completedQuestions', JSON.stringify(completed));
+                updateStreak();
+                showToast('🎉 Progress saved! +10 XP', 'success');
+            }
+        }
+
+        function updateStreak() {
+            const completed = JSON.parse(localStorage.getItem('completedQuestions') || '[]');
+            document.getElementById('streakNumber').innerHTML = completed.length;
+            const mastery = Math.min(100, Math.floor(completed.length / 1.8));
+            document.getElementById('masteryScore').innerHTML = mastery;
+        }
+
+        function markChallengeComplete() {
+            const completedChallenges = JSON.parse(localStorage.getItem('completedChallenges') || '[]');
+            if (!completedChallenges.includes(currentDay)) {
+                completedChallenges.push(currentDay);
+                localStorage.setItem('completedChallenges', JSON.stringify(completedChallenges));
+                showToast('🏆 Challenge completed! +50 XP', 'success');
+                celebrate();
+            } else {
+                showToast('✅ Already completed today\'s challenge!', 'info');
+            }
+        }
+
+        function copyRevisionCode() {
+            const code = document.querySelector('.revision-code code').innerText;
+            navigator.clipboard.writeText(code);
+            showToast('✅ Code copied!', 'success');
+        }
+
+        function celebrate() {
+            for(let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
+        function showToast(message, type) {
+            let toast = document.querySelector('.toast-notification');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.className = 'toast-notification';
+                document.body.appendChild(toast);
+            }
+            toast.textContent = message;
+            toast.style.backgroundColor = type === 'success' ? '#48bb78' : '#4299e1';
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 3000);
+        }
+
+        function nextDay() { if(currentDay < 60) { currentDay++; updatePage(); } else showToast('🎉 Completed all 60 days!', 'success'); }
+        function previousDay() { if(currentDay > 1) { currentDay--; updatePage(); } }
+        function goToDay1() { currentDay = 1; updatePage(); }
+        function goToDay() { let day = parseInt(document.getElementById('dayInput').value); if(day>=1 && day<=60) { currentDay=day; updatePage(); } }
+
+        // Event listeners
+        document.getElementById('typingInput').addEventListener('input', checkTyping);
+        
+        // Load saved data
+        const savedDay = localStorage.getItem('currentDay');
+        if(savedDay) currentDay = parseInt(savedDay);
+        totalRepeats = parseInt(localStorage.getItem('totalRepeats') || '0');
+        document.getElementById('repeatCount').innerHTML = totalRepeats;
+        
+        updatePage();
+    </script>
+</body>
+</html>
